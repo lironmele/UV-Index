@@ -131,31 +131,33 @@
             font-size: clamp(1.8em, 5vw, 2.6em);
             font-weight: 800;
             letter-spacing: -0.5px;
-            color: #0c4a6e;
+            color: #042135;
+            text-shadow: 0 1px 12px rgba(255, 255, 255, 0.55);
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .dark .hero h1 { color: #e0f2fe; }
+        .dark .hero h1 { color: #f0f9ff; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.55); }
 
         .hero-subtitle {
             font-size: 1em;
-            font-weight: 500;
-            color: #075985;
+            font-weight: 600;
+            color: #063047;
+            text-shadow: 0 1px 8px rgba(255, 255, 255, 0.5);
         }
-        .dark .hero-subtitle { color: #bae6fd; }
+        .dark .hero-subtitle { color: #cfedfd; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
 
         .hero-updated {
             margin-top: 8px;
             font-size: 0.82em;
-            font-weight: 500;
-            color: #0369a1;
-            opacity: 0.9;
+            font-weight: 600;
+            color: #052e44;
+            text-shadow: 0 1px 8px rgba(255, 255, 255, 0.5);
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        .dark .hero-updated { color: #7dd3fc; }
+        .dark .hero-updated { color: #a5dbf7; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
 
         .hero-actions { display: flex; gap: 8px; align-items: center; }
 
@@ -193,7 +195,13 @@
             align-items: center;
             margin-bottom: 22px;
             flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            padding: 12px 0;
+            background: linear-gradient(180deg, var(--bg-app) 70%, transparent 100%);
         }
+        .dark .toolbar { background: linear-gradient(180deg, var(--bg-app) 70%, transparent 100%); }
 
         .search-bar {
             position: relative;
@@ -852,6 +860,13 @@
                 searchQuery = e.target.value.toLowerCase().trim();
                 displayLocations();
             });
+            // On mobile, scroll the sticky toolbar to the top on focus so results
+            // appear directly under the search box rather than below the keyboard.
+            searchInput.addEventListener('focus', () => {
+                requestAnimationFrame(() => {
+                    document.getElementById('toolbar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
 
             const datePill = document.getElementById('date-pill');
             const dropdown = document.getElementById('date-dropdown');
@@ -888,13 +903,15 @@
                 if (n > peakVal) { peakVal = n; peakHour = h; }
             }
             const peakLevel = getUVLevel(peakVal);
-            const peakColor = `var(--c)`;
-            let peakTile = `<div class="summary-tile is-peak ${getUVClass(peakVal)}">
-                <span class="summary-label">שיא היום</span>
+            const peakTile = `<div class="summary-tile is-peak ${getUVClass(peakVal)}">
+                <span class="summary-label">שיא היום · ${peakHour}:00</span>
                 <span class="summary-value">${peakVal}<span class="summary-level">${peakLevel.label}</span></span>
             </div>`;
 
-            let nowTile;
+            // Only show a second tile when there's a distinct "now" reading
+            // (i.e. when viewing today). Otherwise the peak tile stands alone
+            // so the daily peak isn't displayed twice.
+            let nowTile = '';
             const currentHour = String(new Date().getHours());
             if (showNow && dateUV[currentHour] != null) {
                 const nv = dateUV[currentHour];
@@ -902,11 +919,6 @@
                 nowTile = `<div class="summary-tile is-now">
                     <span class="summary-label">עכשיו (${currentHour}:00)</span>
                     <span class="summary-value">${nv}<span class="summary-level" style="color:var(--text-tertiary)">${nl.label}</span></span>
-                </div>`;
-            } else {
-                nowTile = `<div class="summary-tile is-now">
-                    <span class="summary-label">בשעה ${peakHour}:00</span>
-                    <span class="summary-value">${peakVal}<span class="summary-sub">שעת השיא</span></span>
                 </div>`;
             }
             return `<div class="card-summary">${peakTile}${nowTile}</div>`;
