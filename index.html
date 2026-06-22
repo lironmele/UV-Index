@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UV Index☀️</title>
+    <meta name="theme-color" content="#0ea5e9">
+    <title>UV Index ☀️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f0f0f0;
-            --text-primary: #212529;
-            --text-secondary: #495057;
-            --text-tertiary: #6c757d;
-            --text-muted: #adb5bd;
-            --border-color: #dee2e6;
-            --border-color-hover: #ced4da;
-            --border-color-focus: #667eea;
-            --error-color: #dc3545;
-            --error-bg: #fff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --time-hue-overlay: transparent;
-            --header-glow: transparent;
+            --bg-app: #eef2f7;
+            --bg-app-2: #e3ecf5;
+            --bg-surface: #ffffff;
+            --bg-surface-2: #f6f8fb;
+            --bg-elevated: rgba(255, 255, 255, 0.72);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-strong: #cbd5e1;
+            --accent: #0ea5e9;
+            --accent-2: #6366f1;
+            --accent-soft: rgba(14, 165, 233, 0.12);
+            --error-color: #dc2626;
+            --error-bg: #fef2f2;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+            --shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.22);
+            --shadow-lg: 0 24px 60px -20px rgba(15, 23, 42, 0.28);
+            --radius: 18px;
+            --radius-sm: 12px;
+            --sky-top: #0ea5e9;
+            --sky-bottom: #38bdf8;
         }
 
         .dark {
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --bg-tertiary: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0e0;
-            --text-tertiary: #b0b0b0;
-            --text-muted: #808080;
-            --border-color: #3a3a3a;
-            --border-color-hover: #4a4a4a;
-            --border-color-focus: #667eea;
-            --error-color: #ff6b6b;
-            --error-bg: #2a1f1f;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            --time-hue-overlay: transparent;
-            --header-glow: transparent;
+            --bg-app: #0b1120;
+            --bg-app-2: #0f172a;
+            --bg-surface: #131c2e;
+            --bg-surface-2: #0f1828;
+            --bg-elevated: rgba(19, 28, 46, 0.72);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #233047;
+            --border-strong: #324054;
+            --accent: #38bdf8;
+            --accent-2: #818cf8;
+            --accent-soft: rgba(56, 189, 248, 0.16);
+            --error-color: #f87171;
+            --error-bg: #2a1717;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+            --shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.7);
+            --shadow-lg: 0 30px 70px -24px rgba(0, 0, 0, 0.8);
+            --sky-top: #1e3a5f;
+            --sky-bottom: #0f2236;
         }
 
         * {
@@ -47,831 +65,694 @@
             box-sizing: border-box;
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background:
+                radial-gradient(1200px 600px at 100% -10%, var(--accent-soft), transparent 60%),
+                linear-gradient(180deg, var(--bg-app) 0%, var(--bg-app-2) 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             min-height: 100vh;
-            padding: 20px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--time-hue-overlay);
-            pointer-events: none;
-            z-index: 0;
-            transition: background 0.5s ease;
-            mix-blend-mode: overlay;
+            padding: 0 0 60px;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== Hero header ===== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 32px 32px;
+            background:
+                radial-gradient(900px 400px at 85% -40%, rgba(255, 255, 255, 0.35), transparent 60%),
+                linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+            box-shadow: var(--shadow);
+            transition: background 0.6s ease;
+            margin-bottom: 26px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 8%;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fde68a 0%, #fbbf24 55%, rgba(251, 191, 36, 0) 72%);
+            filter: blur(2px);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .hero-inner {
             position: relative;
             z-index: 1;
-        }
-
-        .header {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 26px 20px 30px;
             display: flex;
+            align-items: flex-start;
             justify-content: space-between;
+            gap: 16px;
+        }
+
+        .hero-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+
+        .hero h1 {
+            font-size: clamp(1.8em, 5vw, 2.6em);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            position: relative;
-            padding: 15px 20px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--header-glow) 0%, var(--bg-secondary) 40%, var(--bg-secondary) 60%, var(--header-glow) 100%);
-            transition: background 0.5s ease;
-            border: 1px solid var(--border-color);
+            gap: 10px;
         }
+        .dark .hero h1 { color: #f0f9ff; }
 
-        h1 {
-            color: var(--text-secondary);
-            text-align: center;
-            margin: 0;
-            font-size: 2.5em;
+        .hero-subtitle {
+            font-size: 1em;
             font-weight: 600;
-            flex: 1;
+            color: rgba(255, 255, 255, 0.92);
         }
+        .dark .hero-subtitle { color: #cfedfd; }
 
-        .date-icon-button,
-        .dark-mode-toggle {
-            background: none;
-            border: none;
-            font-size: 1.8em;
+        .hero-updated {
+            margin-top: 8px;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.88);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dark .hero-updated { color: #a5dbf7; }
+
+        .hero-actions { display: flex; gap: 8px; align-items: center; }
+
+        .icon-button {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            font-size: 1.35em;
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            color: var(--text-tertiary);
+            border-radius: 14px;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            color: #0c4a6e;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 44px;
-            width: 44px;
+            height: 46px;
+            width: 46px;
             line-height: 1;
+            box-shadow: var(--shadow-sm);
+        }
+        .dark .icon-button {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #e0f2fe;
+        }
+        .icon-button:hover { transform: translateY(-2px) scale(1.04); background: rgba(255, 255, 255, 0.7); }
+        .dark .icon-button:hover { background: rgba(255, 255, 255, 0.16); }
+        .icon-button:active { transform: scale(0.94); }
+
+        /* ===== Controls toolbar ===== */
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin: 0 -20px 22px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            padding: 12px 20px;
+            background: var(--bg-app);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 6px 16px -10px rgba(15, 23, 42, 0.35);
         }
 
-        .date-icon-button:hover,
-        .dark-mode-toggle:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            transform: scale(1.1);
+        .search-bar {
+            position: relative;
+            flex: 1;
+            min-width: 220px;
         }
+
+        .search-bar .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1em;
+            pointer-events: none;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 46px 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            font-size: 1em;
+            font-family: inherit;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            outline: none;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+        }
+        .search-bar input::placeholder { color: var(--text-muted); }
+        .search-bar input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-soft);
+        }
+
+        .date-control { position: relative; }
+
+        .date-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 18px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+        }
+        .date-pill:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+        .date-pill .chev { font-size: 0.7em; color: var(--text-muted); }
 
         .date-dropdown {
             position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 10px;
-            background: var(--bg-secondary);
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: var(--shadow);
+            border-radius: 14px;
+            padding: 8px;
+            box-shadow: var(--shadow-lg);
             z-index: 1000;
-            min-width: 200px;
+            min-width: 220px;
+            max-height: 320px;
+            overflow-y: auto;
             display: none;
         }
+        .date-dropdown.show { display: block; animation: pop 0.16s ease; }
 
-        .date-dropdown.show {
-            display: block;
+        @keyframes pop {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .date-dropdown select {
+        .date-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 11px 14px;
+            border: none;
+            background: none;
+            border-radius: 10px;
+            font-family: inherit;
             font-size: 0.95em;
-            cursor: pointer;
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            outline: none;
             font-weight: 500;
-            transition: border-color 0.3s ease;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-align: right;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .date-option:hover { background: var(--bg-surface-2); color: var(--text-primary); }
+        .date-option.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+        .date-option .badge-today {
+            font-size: 0.75em;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: var(--accent);
+            color: #fff;
         }
 
-        .date-dropdown select:focus {
-            border-color: var(--border-color-focus);
-            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
-        }
-
+        /* ===== States ===== */
         .loading {
             text-align: center;
             color: var(--text-tertiary);
-            font-size: 1.2em;
-            margin: 40px 0;
+            font-size: 1.1em;
+            margin: 60px 0;
         }
+        .spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .error {
             background: var(--error-bg);
             color: var(--error-color);
             padding: 20px;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             margin: 20px 0;
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1.05em;
             border: 1px solid var(--error-color);
         }
 
-        .locations-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 20px;
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-tertiary);
         }
+        .empty-state .emoji { font-size: 3em; display: block; margin-bottom: 12px; }
+        .empty-state h3 { color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; }
+
+        /* ===== Section label ===== */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            margin: 4px 4px 12px;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* ===== Locations grid ===== */
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 18px;
+        }
+        .locations-grid + .section-label { margin-top: 30px; }
 
         .location-card {
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            padding: 24px;
+            background: var(--bg-surface);
+            border-radius: var(--radius);
+            padding: 20px;
             border: 1px solid var(--border-color);
-            transition: border-color 0.2s ease, background-color 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            animation: cardIn 0.35s ease both;
         }
-
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .location-card:hover {
-            border-color: var(--border-color-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--border-strong);
+        }
+        .location-card.pinned {
+            border-color: color-mix(in srgb, #ef4444 35%, var(--border-color));
+        }
+        .location-card.pinned::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #fb7185, #ef4444);
         }
 
-        .location-name {
-            font-size: 1.5em;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            text-align: right;
-            direction: rtl;
+        .card-head {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
+            margin-bottom: 16px;
         }
-
-        .location-name-text {
-            flex: 1;
+        .location-name {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
         }
 
         .pin-button {
             background: none;
             border: none;
-            font-size: 1.3em;
+            font-size: 1.2em;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            padding: 6px;
+            border-radius: 10px;
+            transition: transform 0.25s ease, background 0.2s ease;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .pin-button:hover { background: var(--bg-surface-2); transform: scale(1.15); }
+        .pin-button:active { transform: scale(0.9); }
+        .pin-button.animate { animation: heartBeat 0.6s ease; }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.35); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== Hourly strip ===== */
+        .uv-strip-label {
+            font-size: 0.74em;
+            font-weight: 700;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+        .uv-section {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 4px;
+            margin: 0 -4px;
+            padding-inline: 4px;
+        }
+        .uv-section::-webkit-scrollbar { height: 6px; }
+        .uv-section::-webkit-scrollbar-track { background: transparent; }
+        .uv-section::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+
+        .uv-strip {
+            display: flex;
+            gap: 6px;
+            direction: ltr;
+            min-width: max-content;
+        }
+        .uv-hour {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+        .uv-hour-time {
+            font-size: 0.72em;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .uv-cell {
+            width: 38px;
+            height: 44px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            user-select: none;
-        }
-
-        .pin-button:hover {
-            background: var(--bg-tertiary);
-            color: #dc3545;
-            transform: scale(1.1);
-        }
-
-        .pin-button.pinned {
-            color: #dc3545;
-        }
-
-        .pin-button.animate {
-            animation: heartBeat 0.6s ease;
-        }
-
-        .pin-button.pinned:hover {
-            color: #c82333;
-            transform: scale(1.1);
-        }
-
-        @keyframes heartBeat {
-            0% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.3);
-            }
-            50% {
-                transform: scale(1);
-            }
-            75% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .pin-button:active {
-            transform: scale(0.9);
-        }
-
-        .stats {
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease;
-        }
-
-        .stats h2 {
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .stats-count {
-            font-size: 2em;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-
-        .search-bar {
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            font-weight: 800;
             font-size: 1em;
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            outline: none;
-            direction: rtl;
-            text-align: right;
-            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: transform 0.15s ease;
         }
+        .dark .uv-cell { border-color: rgba(255, 255, 255, 0.08); }
+        .uv-cell:hover { transform: translateY(-2px); }
+        .uv-hour.now .uv-cell {
+            box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--accent);
+        }
+        .uv-hour.now .uv-hour-time { color: var(--accent); font-weight: 800; }
 
-        .search-bar input:focus {
-            border-color: var(--border-color-focus);
-        }
-
-        .search-bar input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .uv-table {
-            margin-top: 15px;
-            border-collapse: collapse;
-            font-size: 0.9em;
-            min-width: 100%;
-            width: max-content;
-        }
-
-        .uv-table th,
-        .uv-table td {
-            padding: 10px;
-            text-align: center;
-            border: none;
-            white-space: nowrap;
-            direction: ltr;
-        }
-
-        .uv-table th {
-            background: var(--bg-primary);
-            font-weight: 600;
-            color: var(--text-secondary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .uv-table td {
-            background: var(--bg-secondary);
-            transition: background-color 0.3s ease;
-        }
-
-        .uv-value {
-            font-weight: 600;
-            border-radius: 4px;
-            padding: 6px 12px;
-            display: inline-block;
-            min-width: 36px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .dark .uv-value {
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .uv-0 {
-            background: #86efac;
-            color: #14532d;
-        }
-
-        .uv-1 {
-            background: #4ade80;
-            color: #064e20;
-        }
-
-        .uv-2 {
-            background: #fef08a;
-            color: #713f12;
-        }
-
-        .uv-3 {
-            background: #fbbf24;
-            color: #78350f;
-        }
-
-        .uv-4 {
-            background: #fb923c;
-            color: #7c2d12;
-        }
-
-        .uv-5 {
-            background: #f97316;
-            color: #ffffff;
-        }
-
-        .uv-6 {
-            background: #fb7185;
-            color: #7f1d1d;
-        }
-
-        .uv-7 {
-            background: #f43f5e;
-            color: #ffffff;
-        }
-
-        .uv-8 {
-            background: #ef4444;
-            color: #ffffff;
-        }
-
-        .uv-9 {
-            background: #dc2626;
-            color: #ffffff;
-        }
-
-        .uv-10 {
-            background: #c084fc;
-            color: #ffffff;
-        }
-
-        .uv-11 {
-            background: #7c3aed;
-            color: #ffffff;
-        }
-
-        .uv-12 {
-            background: #1e1b4b;
-            color: #ffffff;
-            box-shadow: 0 0 8px rgba(124, 58, 237, 0.6);
-        }
-
-        .uv-section {
-            margin-top: 10px;
-            overflow-x: auto;
-            overflow-y: visible;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .uv-section::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .uv-section::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-            border-radius: 4px;
-        }
-
-        .uv-section::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        .uv-section::-webkit-scrollbar-thumb:hover {
-            background: var(--border-color-hover);
-        }
+        /* UV color scale */
+        .uv-0 { background: #a7f3d0; color: #065f46; }
+        .uv-1 { background: #6ee7b7; color: #064e3b; }
+        .uv-2 { background: #fde68a; color: #713f12; }
+        .uv-3 { background: #fcd34d; color: #78350f; }
+        .uv-4 { background: #fbbf24; color: #7c2d12; }
+        .uv-5 { background: #fb923c; color: #7c2d12; }
+        .uv-6 { background: #f97316; color: #ffffff; }
+        .uv-7 { background: #f43f5e; color: #ffffff; }
+        .uv-8 { background: #ef4444; color: #ffffff; }
+        .uv-9 { background: #dc2626; color: #ffffff; }
+        .uv-10 { background: #b91c1c; color: #ffffff; }
+        .uv-11 { background: #a21caf; color: #ffffff; }
+        .uv-12 { background: #6b21a8; color: #ffffff; box-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
 
         .no-uv-data {
             color: var(--text-tertiary);
             font-style: italic;
-            margin-top: 10px;
+            font-size: 0.92em;
+            padding: 14px;
+            text-align: center;
+            background: var(--bg-surface-2);
+            border-radius: var(--radius-sm);
         }
 
+        @media (max-width: 520px) {
+            .toolbar { gap: 10px; }
+            .date-pill { padding: 13px 14px; }
+            .locations-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div style="position: relative;">
-                <button id="date-icon-button" class="date-icon-button" style="display: none;" title="בחר תאריך">
-                    📅
-                </button>
-                <div id="date-dropdown" class="date-dropdown">
-                    <select id="date-select"></select>
-                </div>
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-title-wrap">
+                <h1><span>UV Index</span> <span>☀️</span></h1>
+                <span class="hero-subtitle">מדד הקרינה היומי בישראל</span>
+                <span id="hero-updated" class="hero-updated" style="display:none;"></span>
             </div>
-            <h1>UV Index</h1>
-            <div style="position: relative;">
-                <button id="dark-mode-toggle" class="dark-mode-toggle" title="Toggle dark mode">
-                    🌙
-                </button>
+            <div class="hero-actions">
+                <button id="dark-mode-toggle" class="icon-button" title="מצב כהה / בהיר" aria-label="Toggle dark mode">🌙</button>
             </div>
         </div>
-        
+    </header>
+
+    <div class="container">
         <div id="loading" class="loading">
+            <div class="spinner"></div>
             ...טוען מיקומים
         </div>
 
         <div id="error" class="error" style="display: none;"></div>
 
-        <div id="search-bar" class="search-bar" style="display: none;">
-            <input type="text" id="search-input" placeholder="חפש מיקומים...">
+        <div id="toolbar" class="toolbar" style="display: none;">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="חיפוש מיקום...">
+            </div>
+            <div class="date-control">
+                <button id="date-pill" class="date-pill">
+                    <span>📅</span>
+                    <span id="date-pill-label">בחר תאריך</span>
+                    <span class="chev">▾</span>
+                </button>
+                <div id="date-dropdown" class="date-dropdown"></div>
+            </div>
         </div>
 
-        <div id="locations" class="locations-grid"></div>
+        <div id="locations-wrap"></div>
     </div>
 
     <script>
         let locationsData = {};
         let uvData = {};
         let availableDates = [];
+        let selectedDate = '';
         let searchQuery = '';
-        
-        // Calculate time-based hue overlay
-        function getTimeBasedHue() {
-            const now = new Date();
-            const hour = now.getHours();
-            const isDark = document.documentElement.classList.contains('dark');
-            
-            let hue, saturation, lightness, alpha;
-            
-            // 0-6: Deep night (cool blue)
-            if (hour >= 0 && hour < 6) {
-                hue = 220;
-                saturation = isDark ? 25 : 12;
-                lightness = isDark ? 15 : 10;
-                alpha = isDark ? 0.5 : 0.25;
-            }
-            // 6-9: Sunrise (warm orange/yellow)
-            else if (hour >= 6 && hour < 9) {
-                hue = 35;
-                saturation = isDark ? 30 : 15;
-                lightness = isDark ? 20 : 12;
-                alpha = isDark ? 0.6 : 0.3;
-            }
-            // 9-12: Morning (bright yellow)
-            else if (hour >= 9 && hour < 12) {
-                hue = 50;
-                saturation = isDark ? 25 : 12;
-                lightness = isDark ? 25 : 10;
-                alpha = isDark ? 0.5 : 0.25;
-            }
-            // 12-15: Peak day (neutral, slight warm)
-            else if (hour >= 12 && hour < 15) {
-                hue = 10;
-                saturation = isDark ? 20 : 8;
-                lightness = isDark ? 15 : 5;
-                alpha = isDark ? 0.4 : 0.15;
-            }
-            // 15-18: Afternoon (warm)
-            else if (hour >= 15 && hour < 18) {
-                hue = 25;
-                saturation = isDark ? 25 : 12;
-                lightness = isDark ? 20 : 10;
-                alpha = isDark ? 0.5 : 0.25;
-            }
-            // 18-21: Evening/sunset (warm orange/pink)
-            else if (hour >= 18 && hour < 21) {
-                hue = 15;
-                saturation = isDark ? 35 : 18;
-                lightness = isDark ? 20 : 12;
-                alpha = isDark ? 0.6 : 0.3;
-            }
-            // 21-24: Night (cool blue)
-            else {
-                hue = 230;
-                saturation = isDark ? 28 : 12;
-                lightness = isDark ? 18 : 10;
-                alpha = isDark ? 0.55 : 0.25;
-            }
-            
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
-        }
-        
-        // Calculate time-based header glow (for gradient background)
-        function getTimeBasedGlow() {
-            const now = new Date();
-            const hour = now.getHours();
-            const isDark = document.documentElement.classList.contains('dark');
-            
-            let hue, saturation, lightness, alpha;
-            
-            // 0-6: Deep night (cool blue glow)
-            if (hour >= 0 && hour < 6) {
-                hue = 220;
-                saturation = isDark ? 40 : 30;
-                lightness = isDark ? 25 : 35;
-                alpha = isDark ? 0.6 : 0.4;
-            }
-            // 6-9: Sunrise (warm orange/yellow glow)
-            else if (hour >= 6 && hour < 9) {
-                hue = 35;
-                saturation = isDark ? 50 : 40;
-                lightness = isDark ? 30 : 40;
-                alpha = isDark ? 0.7 : 0.5;
-            }
-            // 9-12: Morning (bright yellow glow)
-            else if (hour >= 9 && hour < 12) {
-                hue = 50;
-                saturation = isDark ? 45 : 35;
-                lightness = isDark ? 35 : 45;
-                alpha = isDark ? 0.65 : 0.45;
-            }
-            // 12-15: Peak day (neutral, slight warm glow)
-            else if (hour >= 12 && hour < 15) {
-                hue = 10;
-                saturation = isDark ? 35 : 25;
-                lightness = isDark ? 30 : 40;
-                alpha = isDark ? 0.5 : 0.3;
-            }
-            // 15-18: Afternoon (warm glow)
-            else if (hour >= 15 && hour < 18) {
-                hue = 25;
-                saturation = isDark ? 45 : 35;
-                lightness = isDark ? 32 : 42;
-                alpha = isDark ? 0.6 : 0.4;
-            }
-            // 18-21: Evening/sunset (warm orange/pink glow)
-            else if (hour >= 18 && hour < 21) {
-                hue = 15;
-                saturation = isDark ? 55 : 45;
-                lightness = isDark ? 30 : 40;
-                alpha = isDark ? 0.7 : 0.5;
-            }
-            // 21-24: Night (cool blue glow)
-            else {
-                hue = 230;
-                saturation = isDark ? 45 : 35;
-                lightness = isDark ? 28 : 38;
-                alpha = isDark ? 0.65 : 0.45;
-            }
-            
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
-        }
-        
-        // Apply time-based hue
-        function applyTimeBasedHue() {
-            const hue = getTimeBasedHue();
-            const glow = getTimeBasedGlow();
-            document.documentElement.style.setProperty('--time-hue-overlay', hue);
-            document.documentElement.style.setProperty('--header-glow', glow);
-        }
-        
-        // Dark mode functionality
-        function initDarkMode() {
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            
-            // Set initial state
-            if (isDarkMode) {
-                document.documentElement.classList.add('dark');
-                darkModeToggle.textContent = '☀️';
-            } else {
-                document.documentElement.classList.remove('dark');
-                darkModeToggle.textContent = '🌙';
-            }
-            
-            // Apply time-based hue
-            applyTimeBasedHue();
-            
-            // Toggle dark mode on button click
-            darkModeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('darkMode', isDark);
-                darkModeToggle.textContent = isDark ? '🌙' : '☀️';
-                // Update hue when toggling dark mode
-                applyTimeBasedHue();
-            });
-            
-            // Update hue every hour
-            setInterval(applyTimeBasedHue, 60 * 60 * 1000);
-        }
-        
-        // Fuzzy search function
-        function fuzzyMatch(pattern, text) {
-            pattern = pattern.toLowerCase();
-            text = text.toLowerCase();
-            
-            // Exact match (highest priority)
-            if (text === pattern) return 1000;
-            
-            // Starts with pattern (high priority)
-            if (text.startsWith(pattern)) return 500;
-            
-            // Contains pattern as substring (medium priority)
-            if (text.includes(pattern)) return 200;
-            
-            // Fuzzy match: check if all characters in pattern appear in order
-            let patternIndex = 0;
-            let consecutiveMatches = 0;
-            let maxConsecutive = 0;
-            
-            for (let i = 0; i < text.length && patternIndex < pattern.length; i++) {
-                if (text[i] === pattern[patternIndex]) {
-                    consecutiveMatches++;
-                    maxConsecutive = Math.max(maxConsecutive, consecutiveMatches);
-                    patternIndex++;
-                } else {
-                    consecutiveMatches = 0;
-                }
-            }
-            
-            // If all pattern characters found in order
-            if (patternIndex === pattern.length) {
-                // Score based on how close together the matches are
-                return 50 + (maxConsecutive * 10);
-            }
-            
-            // Character similarity: count how many pattern chars appear in text
-            let matchedChars = 0;
-            const textChars = new Set(text);
-            for (let char of pattern) {
-                if (textChars.has(char)) {
-                    matchedChars++;
-                }
-            }
-            
-            // If most characters match, give it a low score
-            if (matchedChars >= Math.ceil(pattern.length * 0.6)) {
-                return 10 + matchedChars;
-            }
-            
-            return 0;
-        }
-        
-        // Load pinned locations from localStorage
-        function getPinnedLocations() {
-            const pinned = localStorage.getItem('pinnedLocations');
-            return pinned ? JSON.parse(pinned) : [];
-        }
-        
-        // Save pinned locations to localStorage
-        function savePinnedLocations(pinned) {
-            localStorage.setItem('pinnedLocations', JSON.stringify(pinned));
-        }
-        
-        // Toggle pin status of a location
-        function togglePin(locationId, event) {
-            // Add animation to the clicked button
-            if (event && event.target) {
-                const btn = event.target.closest('.pin-button');
-                if (btn) {
-                    btn.classList.add('animate');
-                    setTimeout(() => {
-                        btn.classList.remove('animate');
-                    }, 600);
-                }
-            }
-            
-            let pinned = getPinnedLocations();
-            const index = pinned.indexOf(locationId);
-            if (index > -1) {
-                pinned.splice(index, 1);
-            } else {
-                pinned.push(locationId);
-            }
-            savePinnedLocations(pinned);
-            // Refresh display
-            const dateSelectEl = document.getElementById('date-select');
-            displayLocations(dateSelectEl.value);
-        }
+
+        const UV_LEVELS = [
+            { max: 2,  label: 'נמוך',     en: 'Low',       cls: 'uv-2'  },
+            { max: 5,  label: 'בינוני',   en: 'Moderate',  cls: 'uv-4'  },
+            { max: 7,  label: 'גבוה',     en: 'High',      cls: 'uv-6'  },
+            { max: 10, label: 'גבוה מאוד', en: 'Very High', cls: 'uv-9'  },
+            { max: 99, label: 'קיצוני',   en: 'Extreme',   cls: 'uv-11' }
+        ];
 
         function getUVClass(value) {
-            const uv = parseInt(value) || 0;
-            if (uv === 0) return 'uv-0';
-            if (uv === 1) return 'uv-1';
-            if (uv === 2) return 'uv-2';
-            if (uv === 3) return 'uv-3';
-            if (uv === 4) return 'uv-4';
-            if (uv === 5) return 'uv-5';
-            if (uv === 6) return 'uv-6';
-            if (uv === 7) return 'uv-7';
-            if (uv === 8) return 'uv-8';
-            if (uv === 9) return 'uv-9';
-            if (uv === 10) return 'uv-10';
-            if (uv === 11) return 'uv-11';
-            return 'uv-12';
+            const uv = Math.min(parseInt(value) || 0, 12);
+            return `uv-${uv}`;
         }
 
         function getUVLevel(value) {
             const uv = parseInt(value) || 0;
-            if (uv <= 2) return 'Low';
-            if (uv <= 5) return 'Moderate';
-            if (uv <= 7) return 'High';
-            if (uv <= 10) return 'Very High';
-            return 'Extreme';
+            return UV_LEVELS.find(l => uv <= l.max) || UV_LEVELS[UV_LEVELS.length - 1];
+        }
+
+        /* ===== Time-of-day sky gradient for the hero ===== */
+        function applySkyGradient() {
+            const hour = new Date().getHours();
+            const isDark = document.documentElement.classList.contains('dark');
+            let top, bottom;
+            if (hour < 6)        { top = isDark ? '#16233d' : '#2c3e60'; bottom = isDark ? '#0c1626' : '#46577a'; }
+            else if (hour < 9)   { top = isDark ? '#2a3a5c' : '#f59e42'; bottom = isDark ? '#3d2f4a' : '#fb7185'; }
+            else if (hour < 16)  { top = isDark ? '#1e3a5f' : '#0ea5e9'; bottom = isDark ? '#0f2236' : '#38bdf8'; }
+            else if (hour < 19)  { top = isDark ? '#3a2b4a' : '#fb7185'; bottom = isDark ? '#2a1f38' : '#f97316'; }
+            else                 { top = isDark ? '#16233d' : '#3b4d70'; bottom = isDark ? '#0c1626' : '#586a90'; }
+            document.documentElement.style.setProperty('--sky-top', top);
+            document.documentElement.style.setProperty('--sky-bottom', bottom);
+        }
+
+        /* ===== Dark mode ===== */
+        function initDarkMode() {
+            const toggle = document.getElementById('dark-mode-toggle');
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                toggle.textContent = '☀️';
+            } else {
+                toggle.textContent = '🌙';
+            }
+            applySkyGradient();
+            toggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+                toggle.textContent = isDark ? '☀️' : '🌙';
+                applySkyGradient();
+            });
+            setInterval(applySkyGradient, 30 * 60 * 1000);
+        }
+
+        /* ===== Fuzzy search ===== */
+        function fuzzyMatch(pattern, text) {
+            pattern = pattern.toLowerCase();
+            text = text.toLowerCase();
+            if (text === pattern) return 1000;
+            if (text.startsWith(pattern)) return 500;
+            if (text.includes(pattern)) return 200;
+            let pi = 0, consec = 0, maxConsec = 0;
+            for (let i = 0; i < text.length && pi < pattern.length; i++) {
+                if (text[i] === pattern[pi]) { consec++; maxConsec = Math.max(maxConsec, consec); pi++; }
+                else { consec = 0; }
+            }
+            if (pi === pattern.length) return 50 + maxConsec * 10;
+            let matched = 0;
+            const chars = new Set(text);
+            for (const c of pattern) if (chars.has(c)) matched++;
+            if (matched >= Math.ceil(pattern.length * 0.6)) return 10 + matched;
+            return 0;
+        }
+
+        /* ===== Pins ===== */
+        function getPinnedLocations() {
+            const pinned = localStorage.getItem('pinnedLocations');
+            return pinned ? JSON.parse(pinned) : [];
+        }
+        function savePinnedLocations(pinned) {
+            localStorage.setItem('pinnedLocations', JSON.stringify(pinned));
+        }
+        function togglePin(locationId, event) {
+            if (event && event.currentTarget) {
+                const btn = event.currentTarget;
+                btn.classList.add('animate');
+                setTimeout(() => btn.classList.remove('animate'), 600);
+            }
+            let pinned = getPinnedLocations();
+            const i = pinned.indexOf(locationId);
+            if (i > -1) pinned.splice(i, 1); else pinned.push(locationId);
+            savePinnedLocations(pinned);
+            displayLocations();
+        }
+
+        /* ===== Date helpers ===== */
+        function isToday(dateStr) {
+            const d = new Date(dateStr); d.setHours(0, 0, 0, 0);
+            const t = new Date(); t.setHours(0, 0, 0, 0);
+            return d.getTime() === t.getTime();
+        }
+        function formatDateLabel(dateStr) {
+            const d = new Date(dateStr);
+            const opts = { weekday: 'short', day: 'numeric', month: 'short' };
+            try { return d.toLocaleDateString('he-IL', opts); } catch (e) { return dateStr; }
+        }
+        function formatUpdated(iso) {
+            try {
+                const d = new Date(iso);
+                return d.toLocaleString('he-IL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+            } catch (e) { return iso; }
+        }
+
+        /* ===== Render date dropdown ===== */
+        function renderDateDropdown() {
+            const dd = document.getElementById('date-dropdown');
+            dd.innerHTML = availableDates.map(date => {
+                const today = isToday(date);
+                const active = date === selectedDate;
+                return `<button class="date-option ${active ? 'active' : ''}" data-date="${date}">
+                    <span>${formatDateLabel(date)}</span>
+                    ${today ? '<span class="badge-today">היום</span>' : ''}
+                </button>`;
+            }).join('');
+            dd.querySelectorAll('.date-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedDate = btn.dataset.date;
+                    updateDatePillLabel();
+                    renderDateDropdown();
+                    displayLocations();
+                    dd.classList.remove('show');
+                });
+            });
+        }
+        function updateDatePillLabel() {
+            const label = document.getElementById('date-pill-label');
+            label.textContent = (isToday(selectedDate) ? 'היום · ' : '') + formatDateLabel(selectedDate);
         }
 
         async function fetchData() {
             const loadingEl = document.getElementById('loading');
             const errorEl = document.getElementById('error');
-            const locationsEl = document.getElementById('locations');
-            const dateIconButton = document.getElementById('date-icon-button');
-            const dateDropdown = document.getElementById('date-dropdown');
-            const dateSelectEl = document.getElementById('date-select');
 
             try {
-                // Fetch the pre-generated data snapshot. This JSON is produced
-                // daily by a GitHub Actions workflow (scripts/fetch-uv-data.js)
-                // and committed to the repo, so no live backend is needed.
-                const dataResponse = await fetch(`data/uv-index.json?t=${Date.now()}`);
+                const res = await fetch(`data/uv-index.json?t=${Date.now()}`);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
 
-                if (!dataResponse.ok) {
-                    throw new Error(`HTTP error! status: ${dataResponse.status}`);
-                }
-
-                const dataResult = await dataResponse.json();
-
-                // Hide loading
                 loadingEl.style.display = 'none';
                 errorEl.style.display = 'none';
 
-                // Check if data exists
-                if (!dataResult.locations) {
-                    throw new Error('No locations data received');
-                }
-                if (!dataResult.uv) {
-                    throw new Error('No UV data received');
+                if (!data.locations) throw new Error('No locations data received');
+                if (!data.uv) throw new Error('No UV data received');
+
+                locationsData = data.locations;
+                uvData = data.uv;
+
+                if (data.updatedAt) {
+                    const hu = document.getElementById('hero-updated');
+                    hu.textContent = '🕓 עודכן: ' + formatUpdated(data.updatedAt);
+                    hu.style.display = 'inline-flex';
                 }
 
-                // Store data
-                locationsData = dataResult.locations;
-                uvData = dataResult.uv;
-
-                // Extract available dates from UV data
                 const datesSet = new Set();
-                Object.values(uvData).forEach(locationData => {
-                    Object.keys(locationData).forEach(date => {
-                        datesSet.add(date);
-                    });
-                });
+                Object.values(uvData).forEach(loc => Object.keys(loc).forEach(d => datesSet.add(d)));
                 availableDates = Array.from(datesSet).sort();
-
-                // Populate date selector
-                dateSelectEl.innerHTML = availableDates.map(date => {
-                    const dateObj = new Date(date);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    dateObj.setHours(0, 0, 0, 0);
-                    const isToday = dateObj.getTime() === today.getTime();
-                    return `<option value="${date}" ${isToday ? 'selected' : ''}>${date}${isToday ? ' (היום)' : ''}</option>`;
-                }).join('');
+                selectedDate = availableDates.find(isToday) || availableDates[0] || '';
 
                 if (availableDates.length > 0) {
-                    dateIconButton.style.display = 'flex';
-                    document.getElementById('search-bar').style.display = 'block';
+                    document.getElementById('toolbar').style.display = 'flex';
+                    renderDateDropdown();
+                    updateDatePillLabel();
                 }
 
-                // Display locations with UV data
-                displayLocations(availableDates[0] || dateSelectEl.value);
-
-                // Setup search functionality
-                const searchInput = document.getElementById('search-input');
-                searchInput.addEventListener('input', (e) => {
-                    searchQuery = e.target.value.toLowerCase().trim();
-                    displayLocations(dateSelectEl.value);
-                });
-
-                // Setup date icon button click
-                dateIconButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    dateDropdown.classList.toggle('show');
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!e.target.closest('.date-icon-button') && !e.target.closest('.date-dropdown')) {
-                        dateDropdown.classList.remove('show');
-                    }
-                });
-
-                // Update display when date changes
-                dateSelectEl.addEventListener('change', (e) => {
-                    displayLocations(e.target.value);
-                    dateDropdown.classList.remove('show');
-                });
-
+                displayLocations();
+                setupControls();
             } catch (error) {
                 loadingEl.style.display = 'none';
                 errorEl.style.display = 'block';
@@ -880,89 +761,127 @@
             }
         }
 
-        function displayLocations(selectedDate) {
-            const locationsEl = document.getElementById('locations');
-            const pinned = getPinnedLocations();
-            let locations = Object.values(locationsData);
-            
-            // Filter locations based on search query with fuzzy matching
-            if (searchQuery) {
-                const scoredLocations = locations.map(location => ({
-                    location: location,
-                    score: fuzzyMatch(searchQuery, location.name),
-                    pinned: pinned.includes(location.lid)
-                })).filter(item => item.score > 0)
-                  .sort((a, b) => {
-                      // Prioritize pinned locations
-                      if (a.pinned && !b.pinned) return -1;
-                      if (!a.pinned && b.pinned) return 1;
-                      // Then sort by fuzzy match score
-                      if (b.score !== a.score) return b.score - a.score;
-                      // Finally alphabetically
-                      return a.location.name.localeCompare(b.location.name);
-                  });
-                
-                locations = scoredLocations.map(item => item.location);
-            } else {
-                // Sort: pinned first, then alphabetically (when no search)
-                locations.sort((a, b) => {
-                    const aPinned = pinned.includes(a.lid);
-                    const bPinned = pinned.includes(b.lid);
-                    if (aPinned && !bPinned) return -1;
-                    if (!aPinned && bPinned) return 1;
-                    return a.name.localeCompare(b.name);
+        function setupControls() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase().trim();
+                displayLocations();
+            });
+            // On mobile, scroll the sticky toolbar to the top on focus so results
+            // appear directly under the search box rather than below the keyboard.
+            searchInput.addEventListener('focus', () => {
+                requestAnimationFrame(() => {
+                    document.getElementById('toolbar').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
-            }
+            });
 
-            locationsEl.innerHTML = locations.map(location => {
-                // Get UV data for this location and date
-                const locationUV = uvData[location.lid];
-                const dateUV = locationUV && locationUV[selectedDate] ? locationUV[selectedDate] : null;
-
-                // Generate hourly UV table
-                let uvTableHTML = '';
-                if (dateUV) {
-                    const hours = Object.keys(dateUV).sort((a, b) => parseInt(a) - parseInt(b));
-                    uvTableHTML = `
-                        <div class="uv-section">
-                            <table class="uv-table">
-                                <thead>
-                                    <tr>
-                                        ${hours.map(h => `<th>${h}:00</th>`).join('')}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        ${hours.map(h => {
-                                            const value = dateUV[h];
-                                            const uvClass = getUVClass(value);
-                                            return `<td><span class="uv-value ${uvClass}" title="${getUVLevel(value)}">${value}</span></td>`;
-                                        }).join('')}
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
-                } else {
-                    uvTableHTML = `<div class="no-uv-data">אין נתוני UV זמינים עבור ${selectedDate}</div>`;
-                }
-
-                const isPinned = pinned.includes(location.lid);
-                return `
-                    <div class="location-card">
-                        <div class="location-name">
-                            <span class="location-name-text">${location.name}</span>
-                            <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="togglePin('${location.lid}', event)" title="${isPinned ? 'הסר סימון' : 'סימון'}">
-                                ${isPinned ? '❤️' : '🤍'}
-                            </button>
-                        </div>
-                        ${uvTableHTML}
-                    </div>
-                `;
-            }).join('');
+            const datePill = document.getElementById('date-pill');
+            const dropdown = document.getElementById('date-dropdown');
+            datePill.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.date-control')) dropdown.classList.remove('show');
+            });
         }
 
-        // Initialize dark mode and fetch data when page loads
+        function buildHourlyStrip(dateUV, showNow) {
+            const hours = Object.keys(dateUV).sort((a, b) => parseInt(a) - parseInt(b));
+            const currentHour = new Date().getHours();
+            const cells = hours.map(h => {
+                const value = dateUV[h];
+                const level = getUVLevel(value);
+                const isNow = showNow && parseInt(h) === currentHour;
+                return `<div class="uv-hour ${isNow ? 'now' : ''}">
+                    <span class="uv-hour-time">${h}:00</span>
+                    <div class="uv-cell ${getUVClass(value)}" title="${level.label} (${level.en})">${value}</div>
+                </div>`;
+            }).join('');
+            return `<div class="uv-strip-label">תחזית שעתית</div>
+                    <div class="uv-section"><div class="uv-strip">${cells}</div></div>`;
+        }
+
+        function getSortedLocations(pinned) {
+            let locations = Object.values(locationsData);
+            if (searchQuery) {
+                return locations.map(loc => ({
+                    location: loc,
+                    score: fuzzyMatch(searchQuery, loc.name),
+                    pinned: pinned.includes(loc.lid)
+                })).filter(x => x.score > 0)
+                  .sort((a, b) => {
+                      if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+                      if (b.score !== a.score) return b.score - a.score;
+                      return a.location.name.localeCompare(b.location.name);
+                  })
+                  .map(x => x.location);
+            }
+            return locations.sort((a, b) => {
+                const ap = pinned.includes(a.lid), bp = pinned.includes(b.lid);
+                if (ap !== bp) return ap ? -1 : 1;
+                return a.name.localeCompare(b.name);
+            });
+        }
+
+        function cardHTML(location, pinned) {
+            const showNow = isToday(selectedDate);
+            const locationUV = uvData[location.lid];
+            const dateUV = locationUV && locationUV[selectedDate] ? locationUV[selectedDate] : null;
+            const isPinned = pinned.includes(location.lid);
+
+            let body;
+            if (dateUV && Object.keys(dateUV).length) {
+                body = buildHourlyStrip(dateUV, showNow);
+            } else {
+                body = `<div class="no-uv-data">אין נתוני UV זמינים עבור ${formatDateLabel(selectedDate)}</div>`;
+            }
+
+            return `<div class="location-card ${isPinned ? 'pinned' : ''}">
+                <div class="card-head">
+                    <span class="location-name">${location.name}</span>
+                    <button class="pin-button" onclick="togglePin('${location.lid}', event)"
+                        title="${isPinned ? 'הסר מהמועדפים' : 'הוסף למועדפים'}">
+                        ${isPinned ? '❤️' : '🤍'}
+                    </button>
+                </div>
+                ${body}
+            </div>`;
+        }
+
+        function displayLocations() {
+            const wrap = document.getElementById('locations-wrap');
+            const pinned = getPinnedLocations();
+            const locations = getSortedLocations(pinned);
+
+            if (!locations.length) {
+                wrap.innerHTML = `<div class="empty-state">
+                    <span class="emoji">🔍</span>
+                    <h3>לא נמצאו מיקומים</h3>
+                    <p>נסה חיפוש אחר</p>
+                </div>`;
+                return;
+            }
+
+            if (searchQuery) {
+                wrap.innerHTML = `<div class="locations-grid">${locations.map(l => cardHTML(l, pinned)).join('')}</div>`;
+                return;
+            }
+
+            const pinnedLocs = locations.filter(l => pinned.includes(l.lid));
+            const otherLocs = locations.filter(l => !pinned.includes(l.lid));
+            let html = '';
+            if (pinnedLocs.length) {
+                html += `<div class="section-label">❤️ מועדפים</div>
+                         <div class="locations-grid">${pinnedLocs.map(l => cardHTML(l, pinned)).join('')}</div>`;
+            }
+            if (otherLocs.length) {
+                html += `<div class="section-label">📍 כל המיקומים</div>
+                         <div class="locations-grid">${otherLocs.map(l => cardHTML(l, pinned)).join('')}</div>`;
+            }
+            wrap.innerHTML = html;
+        }
+
         initDarkMode();
         fetchData();
     </script>
