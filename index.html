@@ -803,42 +803,32 @@
             const dateSelectEl = document.getElementById('date-select');
 
             try {
-                // Use proxy endpoint to avoid CORS issues
-                const baseUrl = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
-                    ? 'http://localhost:3000'
-                    : '';
-                
-                // Fetch both APIs in parallel
-                const [locationsResponse, uvResponse] = await Promise.all([
-                    fetch(`${baseUrl}/api/locations`),
-                    fetch(`${baseUrl}/api/uv-hourly`)
-                ]);
-                
-                if (!locationsResponse.ok) {
-                    throw new Error(`HTTP error! status: ${locationsResponse.status}`);
-                }
-                if (!uvResponse.ok) {
-                    throw new Error(`HTTP error! status: ${uvResponse.status}`);
+                // Fetch the pre-generated data snapshot. This JSON is produced
+                // daily by a GitHub Actions workflow (scripts/fetch-uv-data.js)
+                // and committed to the repo, so no live backend is needed.
+                const dataResponse = await fetch(`data/uv-index.json?t=${Date.now()}`);
+
+                if (!dataResponse.ok) {
+                    throw new Error(`HTTP error! status: ${dataResponse.status}`);
                 }
 
-                const locationsResult = await locationsResponse.json();
-                const uvResult = await uvResponse.json();
-                
+                const dataResult = await dataResponse.json();
+
                 // Hide loading
                 loadingEl.style.display = 'none';
                 errorEl.style.display = 'none';
 
                 // Check if data exists
-                if (!locationsResult.data) {
-                    throw new Error('No locations data received from API');
+                if (!dataResult.locations) {
+                    throw new Error('No locations data received');
                 }
-                if (!uvResult.data || !uvResult.data.locations) {
-                    throw new Error('No UV data received from API');
+                if (!dataResult.uv) {
+                    throw new Error('No UV data received');
                 }
 
                 // Store data
-                locationsData = locationsResult.data;
-                uvData = uvResult.data.locations;
+                locationsData = dataResult.locations;
+                uvData = dataResult.uv;
 
                 // Extract available dates from UV data
                 const datesSet = new Set();
