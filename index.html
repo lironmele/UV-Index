@@ -31,8 +31,8 @@
             --shadow-lg: 0 24px 60px -20px rgba(15, 23, 42, 0.28);
             --radius: 18px;
             --radius-sm: 12px;
-            --sky-top: #7dd3fc;
-            --sky-bottom: #e0f2fe;
+            --sky-top: #0ea5e9;
+            --sky-bottom: #38bdf8;
         }
 
         .dark {
@@ -131,33 +131,30 @@
             font-size: clamp(1.8em, 5vw, 2.6em);
             font-weight: 800;
             letter-spacing: -0.5px;
-            color: #042135;
-            text-shadow: 0 1px 12px rgba(255, 255, 255, 0.55);
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .dark .hero h1 { color: #f0f9ff; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.55); }
+        .dark .hero h1 { color: #f0f9ff; }
 
         .hero-subtitle {
             font-size: 1em;
             font-weight: 600;
-            color: #063047;
-            text-shadow: 0 1px 8px rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.92);
         }
-        .dark .hero-subtitle { color: #cfedfd; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
+        .dark .hero-subtitle { color: #cfedfd; }
 
         .hero-updated {
             margin-top: 8px;
             font-size: 0.82em;
             font-weight: 600;
-            color: #052e44;
-            text-shadow: 0 1px 8px rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.88);
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        .dark .hero-updated { color: #a5dbf7; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
+        .dark .hero-updated { color: #a5dbf7; }
 
         .hero-actions { display: flex; gap: 8px; align-items: center; }
 
@@ -193,15 +190,16 @@
             display: flex;
             gap: 12px;
             align-items: center;
-            margin-bottom: 22px;
+            margin: 0 -20px 22px;
             flex-wrap: wrap;
             position: sticky;
             top: 0;
             z-index: 900;
-            padding: 12px 0;
-            background: linear-gradient(180deg, var(--bg-app) 70%, transparent 100%);
+            padding: 12px 20px;
+            background: var(--bg-app);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 6px 16px -10px rgba(15, 23, 42, 0.35);
         }
-        .dark .toolbar { background: linear-gradient(180deg, var(--bg-app) 70%, transparent 100%); }
 
         .search-bar {
             position: relative;
@@ -309,43 +307,6 @@
             border-radius: 20px;
             background: var(--accent);
             color: #fff;
-        }
-
-        /* ===== UV scale legend ===== */
-        .legend {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-            padding: 14px 18px;
-            background: var(--bg-elevated);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            margin-bottom: 22px;
-            box-shadow: var(--shadow-sm);
-        }
-        .legend-title {
-            font-size: 0.85em;
-            font-weight: 700;
-            color: var(--text-tertiary);
-            margin-left: 8px;
-        }
-        .legend-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.78em;
-            font-weight: 600;
-            color: var(--text-secondary);
-            padding: 4px 6px;
-        }
-        .legend-swatch {
-            width: 14px;
-            height: 14px;
-            border-radius: 5px;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
         }
 
         /* ===== States ===== */
@@ -608,7 +569,6 @@
             .toolbar { gap: 10px; }
             .date-pill { padding: 13px 14px; }
             .locations-grid { grid-template-columns: 1fr; }
-            .legend { gap: 0; }
         }
     </style>
 </head>
@@ -649,8 +609,6 @@
             </div>
         </div>
 
-        <div id="legend" class="legend" style="display: none;"></div>
-
         <div id="locations-wrap"></div>
     </div>
 
@@ -684,11 +642,11 @@
             const hour = new Date().getHours();
             const isDark = document.documentElement.classList.contains('dark');
             let top, bottom;
-            if (hour < 6)        { top = isDark ? '#16233d' : '#3b4d6b'; bottom = isDark ? '#0c1626' : '#5a6b87'; }
-            else if (hour < 9)   { top = isDark ? '#2a3a5c' : '#fcd9a8'; bottom = isDark ? '#3d2f4a' : '#fde7c9'; }
-            else if (hour < 16)  { top = isDark ? '#1e3a5f' : '#7dd3fc'; bottom = isDark ? '#0f2236' : '#e0f2fe'; }
-            else if (hour < 19)  { top = isDark ? '#3a2b4a' : '#fbb6a3'; bottom = isDark ? '#2a1f38' : '#fde2c7'; }
-            else                 { top = isDark ? '#16233d' : '#475a7d'; bottom = isDark ? '#0c1626' : '#64769a'; }
+            if (hour < 6)        { top = isDark ? '#16233d' : '#2c3e60'; bottom = isDark ? '#0c1626' : '#46577a'; }
+            else if (hour < 9)   { top = isDark ? '#2a3a5c' : '#f59e42'; bottom = isDark ? '#3d2f4a' : '#fb7185'; }
+            else if (hour < 16)  { top = isDark ? '#1e3a5f' : '#0ea5e9'; bottom = isDark ? '#0f2236' : '#38bdf8'; }
+            else if (hour < 19)  { top = isDark ? '#3a2b4a' : '#fb7185'; bottom = isDark ? '#2a1f38' : '#f97316'; }
+            else                 { top = isDark ? '#16233d' : '#3b4d70'; bottom = isDark ? '#0c1626' : '#586a90'; }
             document.documentElement.style.setProperty('--sky-top', top);
             document.documentElement.style.setProperty('--sky-bottom', bottom);
         }
@@ -772,16 +730,6 @@
             } catch (e) { return iso; }
         }
 
-        /* ===== Render legend ===== */
-        function renderLegend() {
-            const el = document.getElementById('legend');
-            el.innerHTML = '<span class="legend-title">דרגות חשיפה</span>' +
-                UV_LEVELS.map(l =>
-                    `<span class="legend-item"><span class="legend-swatch ${l.cls}"></span>${l.label}</span>`
-                ).join('');
-            el.style.display = 'flex';
-        }
-
         /* ===== Render date dropdown ===== */
         function renderDateDropdown() {
             const dd = document.getElementById('date-dropdown');
@@ -839,7 +787,6 @@
 
                 if (availableDates.length > 0) {
                     document.getElementById('toolbar').style.display = 'flex';
-                    renderLegend();
                     renderDateDropdown();
                     updateDatePillLabel();
                 }
