@@ -442,46 +442,6 @@
             100% { transform: scale(1); }
         }
 
-        /* ===== Card summary (peak + now) ===== */
-        .card-summary {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .summary-tile {
-            flex: 1;
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            background: var(--bg-surface-2);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .summary-tile.is-peak {
-            color: #fff;
-            border: none;
-        }
-        .summary-label {
-            font-size: 0.72em;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            opacity: 0.85;
-        }
-        .summary-tile:not(.is-peak) .summary-label { color: var(--text-muted); }
-        .summary-value {
-            font-size: 1.7em;
-            font-weight: 800;
-            line-height: 1.1;
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-        }
-        .summary-level { font-size: 0.62em; font-weight: 700; opacity: 0.92; }
-        .summary-tile.is-now .summary-value { color: var(--text-primary); }
-        .summary-tile.is-now .summary-sub { font-size: 0.72em; font-weight: 600; color: var(--text-muted); }
-
         /* ===== Hourly strip ===== */
         .uv-strip-label {
             font-size: 0.74em;
@@ -842,35 +802,6 @@
                     <div class="uv-section"><div class="uv-strip">${cells}</div></div>`;
         }
 
-        function buildSummary(dateUV, showNow) {
-            const entries = Object.entries(dateUV);
-            let peakHour = null, peakVal = -1;
-            for (const [h, v] of entries) {
-                const n = parseInt(v) || 0;
-                if (n > peakVal) { peakVal = n; peakHour = h; }
-            }
-            const peakLevel = getUVLevel(peakVal);
-            const peakTile = `<div class="summary-tile is-peak ${getUVClass(peakVal)}">
-                <span class="summary-label">שיא היום · ${peakHour}:00</span>
-                <span class="summary-value">${peakVal}<span class="summary-level">${peakLevel.label}</span></span>
-            </div>`;
-
-            // Only show a second tile when there's a distinct "now" reading
-            // (i.e. when viewing today). Otherwise the peak tile stands alone
-            // so the daily peak isn't displayed twice.
-            let nowTile = '';
-            const currentHour = String(new Date().getHours());
-            if (showNow && dateUV[currentHour] != null) {
-                const nv = dateUV[currentHour];
-                const nl = getUVLevel(nv);
-                nowTile = `<div class="summary-tile is-now">
-                    <span class="summary-label">עכשיו (${currentHour}:00)</span>
-                    <span class="summary-value">${nv}<span class="summary-level" style="color:var(--text-tertiary)">${nl.label}</span></span>
-                </div>`;
-            }
-            return `<div class="card-summary">${peakTile}${nowTile}</div>`;
-        }
-
         function getSortedLocations(pinned) {
             let locations = Object.values(locationsData);
             if (searchQuery) {
@@ -901,7 +832,7 @@
 
             let body;
             if (dateUV && Object.keys(dateUV).length) {
-                body = buildSummary(dateUV, showNow) + buildHourlyStrip(dateUV, showNow);
+                body = buildHourlyStrip(dateUV, showNow);
             } else {
                 body = `<div class="no-uv-data">אין נתוני UV זמינים עבור ${formatDateLabel(selectedDate)}</div>`;
             }
